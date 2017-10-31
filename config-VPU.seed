@@ -1,0 +1,9 @@
+# VPU config seed for Vending Machines
+CONFIG_TARGET_ar71xx_mikrotik=y
+CONFIG_TARGET_DEVICE_ar71xx_mikrotik_DEVICE_nand-large=y
+CONFIG_PACKAGE_loee-VPU=y
+
+CONFIG_TARGET_ar71xx=y
+CONFIG_TARGET_DEVICE_PACKAGES_ar71xx_mikrotik_DEVICE_nand-large=""
+CONFIG_TARGET_MULTI_PROFILE=y
+CONFIG_TARGET_PER_DEVICE_ROOTFS=y
