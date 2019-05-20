@@ -1,0 +1,36 @@
+--- a/lib/bch.c
++++ b/lib/bch.c
+@@ -70,6 +70,24 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++#ifdef __APPLE__
++#include <libkern/OSByteOrder.h>
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++#endif
++
+ #undef cpu_to_be32
+ #define cpu_to_be32 htobe32
+ #define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
+@@ -117,7 +135,7 @@ struct gf_poly_deg1 {
+ };
+ 
+ #ifdef USE_HOSTCC
+-#if !defined(__DragonFly__) && !defined(__FreeBSD__)
++#if !defined(__DragonFly__) && !defined(__FreeBSD__) && !defined(__APPLE__)
+ static int fls(int x)
+ {
+ 	int r = 32;
