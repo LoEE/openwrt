@@ -68,6 +68,17 @@ $(eval $(call TestHostCommand,perl-thread-queue, \
 	Please install the Perl Thread::Queue module, \
 	perl -MThread::Queue -e 1))
 
+$(eval $(call SetupHostCommand,xargs,Please install GNU 'xargs', \
+	gxargs --version 2>&1 | grep GNU, \
+	xargs --version 2>&1 | grep GNU))
+
+$(eval $(call SetupHostCommand,ls,Please install GNU 'ls', \
+	gls --version 2>&1 | grep GNU, \
+	ls --version 2>&1 | grep GNU))
+
+$(eval $(call SetupHostCommand,rmdir,Please install GNU 'rmdir', \
+	grmdir --version 2>&1 | grep GNU, \
+	rmdir --version 2>&1 | grep GNU))
 
 $(eval $(call SetupHostCommand,tar,Please install GNU 'tar', \
 	gtar --version 2>&1 | grep GNU, \
