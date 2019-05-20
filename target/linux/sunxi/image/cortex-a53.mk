@@ -17,6 +17,16 @@ endef
 
 TARGET_DEVICES += sun50i-h5-nanopi-neo-plus2
 
+define Device/sun50i-h5-nanopi-neo-core2
+  DEVICE_TITLE:=Nanopi NEO Core 2 (H5)
+  SUPPORTED_DEVICES:=nanopi-neo-core2
+  SUNXI_DTS:=allwinner/sun50i-h5-nanopi-neo-core2
+  KERNEL_NAME := Image
+  KERNEL := kernel-bin
+endef
+
+TARGET_DEVICES += sun50i-h5-nanopi-neo-core2
+
 define Device/sun50i-a64-pine64-plus
   DEVICE_TITLE:=Pine64 Plus A64
   SUPPORTED_DEVICES:=pine64,pine64-plus

@@ -182,6 +182,14 @@ define U-Boot/nanopi_neo_plus2
   UENV:=a64
 endef
 
+define U-Boot/nanopi_neo_core2
+  BUILD_SUBTARGET:=cortexa53
+  NAME:=NanoPi NEO Core2 (H5)
+  BUILD_DEVICES:=sun50i-h5-nanopi-neo-core2
+  DEPENDS:=+PACKAGE_u-boot-nanopi_neo_core2:arm-trusted-firmware-sunxi
+  UENV:=a64
+endef
+
 define U-Boot/pine64_plus
   BUILD_SUBTARGET:=cortexa53
   NAME:=Pine64 Plus A64
@@ -229,6 +237,7 @@ UBOOT_TARGETS := \
 	nanopi_m1_plus \
 	nanopi_neo \
 	nanopi_neo_plus2 \
+	nanopi_neo_core2 \
 	orangepi_r1 \
 	orangepi_pc \
 	orangepi_plus \
