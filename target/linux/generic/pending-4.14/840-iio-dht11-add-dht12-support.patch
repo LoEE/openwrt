@@ -1,0 +1,13 @@
+--- a/drivers/iio/humidity/dht11.c
++++ b/drivers/iio/humidity/dht11.c
+@@ -163,8 +163,8 @@ static int dht11_decode(struct dht11 *dh
+ 		dht11->temperature = (((temp_int & 0x7f) << 8) + temp_dec) *
+ 					((temp_int & 0x80) ? -100 : 100);
+ 		dht11->humidity = ((hum_int << 8) + hum_dec) * 100;
+-	} else if (temp_dec == 0 && hum_dec == 0) {  /* DHT11 */
+-		dht11->temperature = temp_int * 1000;
++	} else if (hum_dec == 0) {  /* DHT11 or DHT12 */
++		dht11->temperature = temp_int * 1000 + temp_dec * 100;
+ 		dht11->humidity = hum_int * 1000;
+ 	} else {
+ 		dev_err(dht11->dev,
