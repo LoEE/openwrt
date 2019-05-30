@@ -23,7 +23,7 @@ EOF
   exit 2
 fi
 
-./scripts/feeds update &&
+./scripts/feeds update -i &&
 ./scripts/feeds install -a &&
 cp "$SEED_FILE" .config &&
 make defconfig &&
