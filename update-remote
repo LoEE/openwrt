@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]; then
+  cat <<EOF
+Usage:
+  $0 hostname
+
+Updates the kernel+rootfs and the device tree file on a running device via SSH. Restarts the target.
+Assumes the boot partition is mounted on /mnt/boot.
+
+Examples:
+  $0 te-109
+
+EOF
+  exit 2
+fi
+
+RHOST=$1
+
+rsync -v \
+  bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-initramfs-kernel.bin \
+  "$RHOST":/mnt/boot/uImage &&
+rsync -v \
+  build_dir/target-aarch64_cortex-a53_musl/linux-sunxi_cortexa53/linux-4.14.115/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo-core2.dtb \
+  "$RHOST":/mnt/boot/dtb &&
+ssh "$RHOST" 'sync && reboot'
