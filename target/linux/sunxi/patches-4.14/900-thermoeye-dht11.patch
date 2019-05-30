@@ -1,0 +1,33 @@
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo-core2.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo-core2.dts
+@@ -45,6 +45,15 @@
+ / {
+ 	model = "FriendlyElec NanoPi-NEO-Core2";
+ 	compatible = "friendlyelec,nanopi-neo-core2", "allwinner,sun50i-h5";
++
++	humidity_sensor {
++	  pinctrl-names = "default";
++	  pinctrl-0 = <&dht11_pin>;
++
++	  compatible = "dht11";
++	  gpios = <&pio 6 9 GPIO_ACTIVE_HIGH>;
++	  status = "okay";
++	};
+ };
+ 
+ &emac {
+@@ -81,3 +90,14 @@
+ 	/* eMMC is missing pull-ups */
+ 	bias-pull-up;
+ };
++
++&pio {
++	// Set interrupt debounce to 1us (for all ports).
++	// Default is 31us (32kHz) – too much for reliable DHT11 decoding.
++	input-debounce = <1 1 1>;
++
++	dht11_pin: dht11_pins@0 {
++		pins = "PG9";
++		function = "gpio_out";
++	};
++};
