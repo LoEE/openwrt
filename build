@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec make -j10 IGNORE_ERRORS="n m" BUILD_LOG=1 BUILD_LOG_DIR=bin/logs
