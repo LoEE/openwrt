@@ -1,7 +1,12 @@
 #!/bin/sh
+
+find_seeds() {
+  find feeds -name '*.seed' -maxdepth 2
+}
+
 if [ $# -lt 1 ]; then
-  if [ ! -z "$(which fzf)" ]; then
-    SEED_FILE=$(find feeds -name '*.seed' -maxdepth 2 | fzf --height 25 --preview 'cat {}' --preview-window down:12)
+  if [ ! -z "$(command -v fzf)" ]; then
+    SEED_FILE=$(find_seeds | fzf --height 25 --preview 'cat {}' --preview-window down:12)
   fi
 else
   SEED_FILE=$1
@@ -10,6 +15,10 @@ if [ ! -e "$SEED_FILE" ]; then
   cat <<EOF
 Usage:
   $0 config_seed
+
+Examples:
+$(find feeds -name '*.seed' -maxdepth 2 | awk '{ print "  '"$0"' " $0; }')
+
 EOF
   exit 2
 fi
