@@ -17,7 +17,7 @@ To update a device running any version of Linux: (`root@192.168.0.109` is the ta
 
 To burn the image to a local SD card (`/dev/rdisk3` is the SD card device):
 
-    cat bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-ext4-ramfs-sdcard.img.gz \
+    gunzip -c bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-ext4-ramfs-sdcard.img.gz | \
         | sudo dd of=/dev/rdisk3 bs=10485760
 
 ## SSH configuration
