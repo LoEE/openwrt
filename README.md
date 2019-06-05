@@ -20,11 +20,6 @@ To burn the image to a local SD card (`/dev/rdisk3` is the SD card device):
     gunzip -c bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-ext4-ramfs-sdcard.img.gz | \
         | sudo dd of=/dev/rdisk3 bs=10485760
 
-You can also do it remotely over SSH (for example on a NanoPi board running from eMMC):
-
-    gunzip -c bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-ext4-ramfs-sdcard.img.gz | \
-        | ssh 'dd of=/dev/mmcblk0 bs=10485760'
-
 ## SSH configuration
 
 To improve our SSH experience we can set some options. The fragments below can be appended to `~/.ssh/config`.
