@@ -1,5 +1,11 @@
 ## Building OpenWRT
 
+Before you start, enable credential caching (see https://www.softwaredeveloper.blog/git-credential-storage-libsecret for more info). This method stores the password on disk in plaintext so it's not very secure but it works out of the box on Linux:
+
+    git config --global credential.helper store
+
+Clone, download feeds and build:
+
     git clone http://185.243.54.141:9000/OpenWRT/openwrt.git
     cd openwrt
     ./update
