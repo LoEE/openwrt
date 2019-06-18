@@ -11,6 +11,10 @@ Clone, download feeds and build:
     ./update
     ./build feeds/thermoeye/config-ThermoEye.seed
 
+To clean everything and start from scratch run:
+
+    make distclean
+
 To update a device already running this OpenWRT use: (`te-109` is the hostname, see below)
 
     ./update-remote te-109
