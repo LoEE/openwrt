@@ -1,7 +1,7 @@
 #!/bin/sh
 
 find_seeds() {
-  find feeds -name '*.seed' -maxdepth 2
+  find feeds -maxdepth 2 -name '*.seed'
 }
 
 if [ $# -lt 1 ]; then
@@ -17,7 +17,7 @@ Usage:
   $0 config_seed
 
 Examples:
-$(find feeds -name '*.seed' -maxdepth 2 | awk '{ print "  '"$0"' " $0; }')
+$(find_seeds | awk '{ print "  '"$0"' " $0; }')
 
 EOF
   exit 2
