@@ -1,4 +1,4 @@
-## Building OpenWRT
+## Preparation
 
 Before you start, enable credential caching (see https://www.softwaredeveloper.blog/git-credential-storage-libsecret for more info).
 
@@ -15,6 +15,8 @@ Install dependencies:
 
     apt-get update
     apt-get install -y build-essential libncurses5-dev python unzip liblz4-tool
+
+## Building OpenWRT
 
 Clone, download feeds and build:
 
@@ -42,9 +44,18 @@ To burn the image to a local SD card (`/dev/rdisk3` is the SD card device):
     gunzip -c bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-ext4-ramfs-sdcard.img.gz | \
         | sudo dd of=/dev/rdisk3 bs=10485760
 
-## SSH configuration
+## Using vagrant
 
-To improve our SSH experience we can set some options. The fragments below can be appended to `~/.ssh/config`.
+If you encounter trouble with building on you Linux install you can use vagrant to quickly create a fresh virtual machine with all the needed dependencies:
+
+    vagrant up
+    vagrant ssh
+
+You can then proceed with steps outlined in the *Building OpenWRT* section (*Preparation* will be done for you by vagrant).
+
+## Bonus tip: SSH configuration
+
+To improve our SSH experience you can set some options. The fragments below can be appended to `~/.ssh/config`.
 
 Setup an alias so for example `te-109` can be used to connect to `root@192.168.0.109` without complaining about `known_hosts` conflicts.
 
