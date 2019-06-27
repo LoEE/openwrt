@@ -11,6 +11,11 @@ If you cannot remeber your keyring password you can *remove all stored passwords
 
     rm ~/.local/share/keyrings/login.keyring
 
+Install dependencies:
+
+    apt-get update
+    apt-get install -y build-essential libncurses5-dev python unzip liblz4-tool
+
 Clone, download feeds and build:
 
     git clone http://185.243.54.141:9000/OpenWRT/openwrt.git
