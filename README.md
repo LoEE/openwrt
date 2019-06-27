@@ -1,8 +1,15 @@
 ## Building OpenWRT
 
-Before you start, enable credential caching (see https://www.softwaredeveloper.blog/git-credential-storage-libsecret for more info). This method stores the password on disk in plaintext so it's not very secure but it works out of the box on Linux:
+Before you start, enable credential caching (see https://www.softwaredeveloper.blog/git-credential-storage-libsecret for more info).
 
-    git config --global credential.helper store
+    sudo apt-get install libsecret-1-0 libsecret-1-dev
+    cd /usr/share/doc/git/contrib/credential/libsecret
+    sudo make
+    git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+
+If you cannot remeber your keyring password you can *remove all stored passwords* and start from scratch:
+
+    rm ~/.local/share/keyrings/login.keyring
 
 Clone, download feeds and build:
 
