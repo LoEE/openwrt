@@ -106,6 +106,7 @@ endef
 
 PROFILE_SANITIZED := $(call sanitize,$(PROFILE))
 
+# helper functions for concat_cmd:
 define split_args
 $(foreach data, \
 	$(subst |,$(space),\
@@ -119,6 +120,18 @@ $(call Build/$(word 1,$(1)),$(wordlist 2,$(words $(1)),$(1)))
 
 endef
 
+# calls Build/$part,... foreach part,... in $(1).split('|')
+# space separated args to Build/* may come after each part
+#
+# For example:
+#
+#   sunxi-sdcard | append-metadata | gzip
+#
+# gets converted into:
+#
+#   $(call Build/sunxi-sdcard)
+#   $(call Build/append-metadata)
+#   $(call Build/gzip)
 define concat_cmd
 $(call split_args,$(1),build_cmd)
 endef
