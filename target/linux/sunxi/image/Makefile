@@ -34,21 +34,16 @@ FAT32_ROOT_BLOCKS=$(shell echo $$((512*1024)))
 
 define Build/sunxi-ramfs-sdcard
 	rm -f $@.boot
-	rm -f $@.root
 	mkfs.fat $@.boot -C $(FAT32_BOOT_BLOCKS)
-	mkfs.fat $@.root -C $(FAT32_ROOT_BLOCKS)
 
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
 	mcopy -i $@.boot $(DTS_DIR)/$(SUNXI_DTS).dtb ::dtb
 	mcopy -i $@.boot $(BIN_DIR)/$(KERNEL_INITRAMFS_IMAGE) ::uImage
-	./gen_sunxi_sdcard_img.sh $@ \
+	./gen_sunxi_ramfs_sdcard_img.sh $@ \
 		$@.boot \
-		$@.root \
 		64 \
-		512 \
 		$(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-u-boot-with-spl.bin
 	rm -f $@.boot
-	rm -f $@.root
 endef
 
 # why \x00\x00\x00\x00 for zImage-initramfs
