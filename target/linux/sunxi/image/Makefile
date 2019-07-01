@@ -52,8 +52,7 @@ define Device/Default
   DEVICE_VARS := SUNXI_DTS SUNXI_UBOOT
   KERNEL_NAME := zImage
   KERNEL := kernel-bin | uImage none
-  IMAGES := sdcard.img.gz ramfs-sdcard.img.gz
-  IMAGE/sdcard.img.gz := sunxi-sdcard | append-metadata | gzip
+  IMAGES := ramfs-sdcard.img.gz
   IMAGE/ramfs-sdcard.img.gz := sunxi-ramfs-sdcard | append-metadata | gzip
 endef
 
