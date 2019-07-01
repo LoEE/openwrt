@@ -17,6 +17,7 @@ fi
 
 RHOST=$1
 
+ssh "$RHOST" 'mount -o remount,rw /mnt/boot'
 rsync -v \
   bin/targets/sunxi/cortexa53/openwrt-sunxi-cortexa53-sun50i-h5-nanopi-neo-core2-initramfs-kernel.bin \
   "$RHOST":/mnt/boot/uImage &&
