@@ -32,9 +32,13 @@ EOF
   exit 2
 fi
 
+seed_dir=$(dirname "$SEED_FILE")
+
 echo "$SEED_FILE" > .last-build-configuration &&
 ./scripts/feeds update -i &&
 ./scripts/feeds install -a &&
 cp "$SEED_FILE" .config &&
+ln -sfn "$seed_dir/customizations" ./ &&
+ln -sfn "$seed_dir/files" ./ &&
 make defconfig &&
 make -j10 IGNORE_ERRORS="n m" BUILD_LOG=1 BUILD_LOG_DIR=bin/logs
