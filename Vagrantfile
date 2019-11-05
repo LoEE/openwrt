@@ -33,6 +33,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y build-essential libncurses5-dev python unzip liblz4-tool
-    su -u vagrant - git config --global credential.helper store
+    sudo -u vagrant -i -- git config --global credential.helper store
   SHELL
 end
