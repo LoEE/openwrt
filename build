@@ -1,12 +1,21 @@
 #!/bin/sh
 
+prioritize_previous_choice() {
+  if prev_choice=$(cat .last-build-configuration 2> /dev/null) && [ -e "$prev_choice" ]; then
+    echo "$prev_choice"
+    grep -v "$prev_choice"
+  else
+    cat
+  fi
+}
+
 find_seeds() {
-  find feeds -maxdepth 2 -name '*.seed'
+  find feeds -maxdepth 3 -name '*.seed'
 }
 
 if [ $# -lt 1 ]; then
   if [ ! -z "$(command -v fzf)" ]; then
-    SEED_FILE=$(find_seeds | fzf --height 25 --preview 'cat {}' --preview-window down:12)
+    SEED_FILE=$(find_seeds | prioritize_previous_choice | fzf --height 25 --preview 'cat {}' --preview-window down:12)
   fi
 else
   SEED_FILE=$1
@@ -23,6 +32,7 @@ EOF
   exit 2
 fi
 
+echo "$SEED_FILE" > .last-build-configuration &&
 ./scripts/feeds update -i &&
 ./scripts/feeds install -a &&
 cp "$SEED_FILE" .config &&
