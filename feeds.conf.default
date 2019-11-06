@@ -3,4 +3,5 @@ src-git luci https://git.openwrt.org/project/luci.git;openwrt-18.06
 src-git routing https://git.openwrt.org/feed/routing.git;openwrt-18.06
 src-git telephony https://git.openwrt.org/feed/telephony.git;openwrt-18.06
 src-git loee http://185.243.54.141:9000/OpenWRT/loee-feed.git
+src-git loeeint git@github.com:jpc/loee-internal-feed.git
 src-git thermoeye http://185.243.54.141:9000/OpenWRT/thermoeye-feed.git
