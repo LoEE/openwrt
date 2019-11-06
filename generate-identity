@@ -2,6 +2,7 @@
 
 hostname=$1
 devicename=$2
+ramfs=$3
 
 outdir=tmp-ssh-keys.$devicename.$$
 
@@ -9,19 +10,27 @@ mkdir -p "$outdir/etc/dropbear" "$outdir/root/.ssh"
 
 dropbearkey -t rsa -f "$outdir/etc/dropbear/dropbear_rsa_host_key" 2> /dev/null > /dev/null
 ssh-keygen -q -t rsa -f "$outdir/root/.ssh/id_rsa" -N ""
-cat <<EOF > "$outdir/etc/set-identity"
+if [ "$ramfs" = "ramfs" ]; then
+  cat <<EOF > "$outdir/etc/set-identity"
 #!/bin/sh
 echo "set-identity setting hostname: $devicename"
 uci set system.@system[0].hostname='$devicename'
 uci commit
 EOF
-chmod +x "$outdir/etc/set-identity"
+  chmod +x "$outdir/etc/set-identity"
+fi
 
 mkdir -p ssh-keys/host-keys ssh-keys/client-keys
 
 dropbearkey -y -f "$outdir/etc/dropbear/dropbear_rsa_host_key" | grep "^ssh-rsa " > "ssh-keys/host-keys/$devicename"
 mv "$outdir/root/.ssh/id_rsa.pub" "ssh-keys/client-keys/$devicename"
 
-gtar --owner=root:0 --group=root:0 -C "$outdir" -c . | gzip -9 | ssh "$hostname" 'mount -o remount,rw /mnt/boot && cat > /mnt/boot/identity.tar.gz && mount -o remount,ro /mnt/boot'
+gtar --owner=root:0 --group=root:0 -C "$outdir" -c . | {
+  if [ "$ramfs" = "ramfs" ]; then
+    gzip -9 | ssh "$hostname" 'mount -o remount,rw /mnt/boot && cat > /mnt/boot/identity.tar.gz && mount -o remount,ro /mnt/boot'
+  else
+    ssh "$hostname" "uci set system.@system[0].hostname='$devicename' && uci commit && tar -x -C /"
+  fi
+}
 
 rm -rf "$outdir"
